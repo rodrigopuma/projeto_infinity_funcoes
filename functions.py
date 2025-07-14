@@ -1,11 +1,8 @@
 from time import sleep
 
 def validador_resposta(choice, *args):
-    if choice in args:
-        pass
-    else:
-        print(f'Escolha inválida selecione uma opção válida\n'
-              f'Opções: {args}')
+    while choice not in args:
+        print(f'Escolha inválida. Opções válidas: {args}')
         choice = input('Selecione: ')
     return choice
 
@@ -18,7 +15,7 @@ def menu():
     [4] - Filtrar por prioridade
     [5] - Filtrar por categoria""")
     choice = input('Qual opção você deseja: ') 
-    choice = validador_resposta(choice, '0', '1', '2', '3')
+    choice = validador_resposta(choice, '0', '1', '2', '3', '4', '5')
     return choice
 
 def criar_tarefa():
@@ -33,7 +30,7 @@ def criar_tarefa():
     categoria = input('\nSelecione a categoria: ') # Quero fazer uma listinha de categorias
         
     tarefa = {
-        'ID': int,
+        'ID': None,
         'nome': nome,
         'descrição': descricao,
         'categoria': categoria.lower(),
@@ -69,7 +66,7 @@ Status: {'Concluído' if tarefa['status concluido'] is True else 'Pendente'}
 
 def marcar_tarefa_concluida(lista: list):
     renovar_ids(lista)
-    index_prompt = int(input('Qual tarefa você deseja concluir? (Pelo ID, se não quiser digite 0): '))
+    index_prompt = solicitar_id('Qual tarefa você deseja concluir? (Pelo ID, se não quiser digite 0): ')
     if index_prompt != 0:
         for tarefa in lista:
             if tarefa['ID'] == index_prompt:
@@ -88,20 +85,41 @@ def exibir_tarefas_prioridade(lista: list):
         prioridade = 'media'
     for tarefa in lista:
         if tarefa['prioridade'] == prioridade:
-            print(tarefa)
+            print(f"""-----------------------
+ID: {tarefa['ID']}
+Nome: {tarefa['nome']}
+Descrição: {tarefa['descrição']}
+Categoria: {tarefa['categoria']}
+Prioridade: {tarefa['prioridade']}
+Status: {'Concluído' if tarefa['status concluido'] else 'Pendente'}
+""")
         else:
             pass
 
 def exibir_tarefas_categoria(lista: list, categoria: str):
     for tarefa in lista:
         if tarefa['categoria'] == categoria:
-            print(tarefa)
+            print(f"""-----------------------
+ID: {tarefa['ID']}
+Nome: {tarefa['nome']}
+Descrição: {tarefa['descrição']}
+Categoria: {tarefa['categoria']}
+Prioridade: {tarefa['prioridade']}
+Status: {'Concluído' if tarefa['status concluido'] else 'Pendente'}
+""")
         else:
             pass
 
+def solicitar_id(mensagem: str):
+    while True:
+        try:
+            return int(input(mensagem))
+        except ValueError:
+            print('Digite um número válido.')
+
 def remover_tarefa(lista: list):
-    renovar_ids(lista)
-    index_prompt = int(input('Qual tarefa você deseja excluir? (Pelo ID, se não quiser digite 0): '))
+    renovar_ids(lista)    
+    index_prompt = solicitar_id('Qual tarefa você deseja excluir? (Pelo ID, se não quiser digite 0): ')
     if index_prompt != 0:
         index_prompt -= 1 # Para se alinhar ao indice da lista de tarefas
         lista.pop(index_prompt)
