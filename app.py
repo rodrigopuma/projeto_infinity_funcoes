@@ -1,19 +1,24 @@
+from functions import menu, criar_tarefa, adicionar_tarefa_lista, listar_tarefas, marcar_tarefa_concluida
+
 # Estrutura de dados
 
-def criar_tarefa():
-    nome = input('\nDigite o nome: ')
-    descricao = input('\nDigite a descrição: ')
-    prioridade = input('\nDigite a prioridade: ')
-    categoria = input('\nSelecione a categoria: ') # Quero fazer uma listinha de categorias
-    concluido = False
-    tarefa = {
-        'Nome': nome,
-        'Descrição Tarefa': descricao,
-        'Categoria': categoria,
-        'Prioridade': prioridade,
-        'Status Concluido': concluido 
-    }
-    return tarefa
+lista_tarefas = []
+
+while True:
+    choice = menu()
+
+    if choice == '0':
+        adicionar_tarefa_lista(criar_tarefa(), lista_tarefas)
+
+    if choice == '1':
+        listar_tarefas(lista_tarefas)
+
+    if choice == '2':
+        listar_tarefas(lista_tarefas)
+        marcar_tarefa_concluida(lista_tarefas)
+
+    
+
 
 # def adicionar_tarefa_a_lista(tarefa):
 #     salvar_tarefa(tarefa)
