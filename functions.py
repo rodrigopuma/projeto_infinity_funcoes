@@ -39,16 +39,16 @@ def criar_tarefa():
 def adicionar_tarefa_lista(tarefa: dict, lista: list):
     lista.append(tarefa)
     print('Tarefa adicionada com sucesso!')
-    tarefa['ID'] = adicionar_id(tarefa, lista)
+    renovar_ids(lista)
 
-def adicionar_id(tarefa: None, lista: list):
+def renovar_ids(lista: list):
     contador = 0
     for tarefa in lista:
         contador += 1
         tarefa['ID'] = contador
-    return tarefa['ID']
 
 def listar_tarefas(lista: list):
+    renovar_ids(lista)
     for tarefa in lista:
         sleep(0.3)
         print(f"""-----------------------
@@ -61,6 +61,7 @@ Status: {'Concluído' if tarefa['status concluido'] is True else 'Pendente'}
 """)
 
 def marcar_tarefa_concluida(lista: list):
+    renovar_ids(lista)
     index_prompt = int(input('Qual tarefa você deseja concluir? (Pelo ID, se não quiser digite 0): '))
     if index_prompt != 0:
         for tarefa in lista:
@@ -74,6 +75,7 @@ def marcar_tarefa_concluida(lista: list):
         print('Ok! Voltando ao menu inicial.')
 
 def remover_tarefa(lista: list):
+    renovar_ids(lista)
     index_prompt = int(input('Qual tarefa você deseja excluir? (Pelo ID, se não quiser digite 0): '))
     if index_prompt != 0:
         index_prompt -= 1 # Para se alinhar ao indice da lista de tarefas
