@@ -14,7 +14,9 @@ def menu():
     [0] - Criar Tarefa
     [1] - Ver todas Tarefas
     [2] - Marcar Tarefa como concluída
-    [3] - Remover Tarefa""")
+    [3] - Remover Tarefa
+    [4] - Filtrar por prioridade
+    [5] - Filtrar por categoria""")
     choice = input('Qual opção você deseja: ') 
     choice = validador_resposta(choice, '0', '1', '2', '3')
     return choice
@@ -22,7 +24,12 @@ def menu():
 def criar_tarefa():
     nome = input('\nDigite o nome: ')
     descricao = input('\nDigite a descrição: ')
+
     prioridade = input('\nDigite a prioridade: ')
+    prioridade = validador_resposta(prioridade, 'alta', 'media', 'média', 'baixa')
+    if 'média' == prioridade:
+        prioridade = 'media'
+
     categoria = input('\nSelecione a categoria: ') # Quero fazer uma listinha de categorias
         
     tarefa = {
@@ -73,6 +80,24 @@ def marcar_tarefa_concluida(lista: list):
             print('Não foi encontrado nenhum ID para essa tarefa.')
     else:
         print('Ok! Voltando ao menu inicial.')
+
+def exibir_tarefas_prioridade(lista: list):
+    prioridade = input('Qual prioridade: ').lower()
+    prioridade = validador_resposta(prioridade, 'alta', 'media', 'média', 'baixa')
+    if 'média' == prioridade:
+        prioridade = 'media'
+    for tarefa in lista:
+        if tarefa['prioridade'] == prioridade:
+            print(tarefa)
+        else:
+            pass
+
+def exibir_tarefas_categoria(lista: list, categoria: str):
+    for tarefa in lista:
+        if tarefa['categoria'] == categoria:
+            print(tarefa)
+        else:
+            pass
 
 def remover_tarefa(lista: list):
     renovar_ids(lista)
