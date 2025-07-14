@@ -118,10 +118,16 @@ def solicitar_id(mensagem: str):
             print('Digite um número válido.')
 
 def remover_tarefa(lista: list):
-    renovar_ids(lista)    
+    renovar_ids(lista)
     index_prompt = solicitar_id('Qual tarefa você deseja excluir? (Pelo ID, se não quiser digite 0): ')
     if index_prompt != 0:
-        index_prompt -= 1 # Para se alinhar ao indice da lista de tarefas
-        lista.pop(index_prompt)
+        for tarefa in lista:
+            if tarefa['ID'] == index_prompt:
+                lista.remove(tarefa)
+                print('Tarefa removida com sucesso.')
+                break
+        else:
+            print('ID não encontrado.')
     else:
         print('Ok! Voltando ao menu inicial.')
+
